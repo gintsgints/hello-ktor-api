@@ -1,20 +1,32 @@
 package eu.techwares.demo
 
 import io.ktor.application.*
-import io.ktor.response.*
 import io.ktor.request.*
 import io.ktor.features.*
 import org.slf4j.event.*
-import io.ktor.routing.*
-import io.ktor.http.*
+import io.ktor.routing.routing
 import com.fasterxml.jackson.databind.*
+import eu.techwares.demo.entity.db
+import eu.techwares.demo.entity.user.UserService
 import io.ktor.jackson.*
+import org.jetbrains.squash.connection.DatabaseConnection
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
+import eu.techwares.demo.entity.user.userIndex
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    val kodein = Kodein {
+        bind <DatabaseConnection>() with singleton  { db() }
+        bind<UserService>() with singleton { UserService(instance()) }
+    }
+    val userService by kodein.instance<UserService>()
+
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -27,23 +39,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("API status: OK", contentType = ContentType.Text.Plain)
-        }
-
-        install(StatusPages) {
-            exception<AuthenticationException> { cause ->
-                call.respond(HttpStatusCode.Unauthorized)
-            }
-            exception<AuthorizationException> { cause ->
-                call.respond(HttpStatusCode.Forbidden)
-            }
-
-        }
-
-        get("/json/jackson") {
-            call.respond(mapOf("hello" to "world"))
-        }
+        userIndex(userService)
     }
 }
 

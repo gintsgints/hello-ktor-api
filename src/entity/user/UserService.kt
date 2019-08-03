@@ -28,12 +28,12 @@ class UserService(private val db: DatabaseConnection) {
             }.execute()        }
     }
 
-    fun findAll(): List<ResultRow> {
+    fun findAll(): Set<ResultRow> {
         return db.transaction {
             from(UserModel)
                 .limit(100)
                 .execute()
-                .toList()
+                .toSet()
         }
     }
 }

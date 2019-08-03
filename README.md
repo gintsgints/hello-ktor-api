@@ -29,3 +29,10 @@ gradlew run
 curl -X POST "http://localhost:8080/user" -H "accept: application/json" -H "Content-Type: application/json" -d '{"email": "test@test.com", "displayName": "test", "password": "test234"}'
 curl -X GET "http://localhost:8080/user" -H "accept: application/json"
 ```
+
+# Auto reload.
+
+Autoreload is configured to work within two envents
+
+* watch for source changes and recompile - ```gradlew -t build -x test```
+* in ther console run server with hotreload updated classes ```gradlew run```

@@ -7,6 +7,7 @@ import org.slf4j.event.*
 import io.ktor.routing.routing
 import com.fasterxml.jackson.databind.*
 import eu.techwares.demo.entity.db
+import eu.techwares.demo.entity.user.User
 import eu.techwares.demo.entity.user.UserService
 import io.ktor.jackson.*
 import org.kodein.di.Kodein
@@ -14,6 +15,10 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import eu.techwares.demo.entity.user.userIndex
+import io.ktor.http.HttpStatusCode
+import io.ktor.response.respond
+import io.ktor.response.respondText
+import io.ktor.routing.get
 import org.jetbrains.squash.connection.DatabaseConnection
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -40,6 +45,9 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         userIndex(userService)
+        get("/") {
+            call.respondText("Kotlin API example")
+        }
     }
 }
 

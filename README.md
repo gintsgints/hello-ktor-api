@@ -26,6 +26,6 @@ gradlew run
 - check working api
 
 ```
-curl -X POST "http://localhost:8080/user" -H "accept: application/json"
+curl -X POST "http://localhost:8080/user" -H "accept: application/json" -H "Content-Type: application/json" -d '{"email": "test@test.com", "displayName": "test", "password": "test234"}'
 curl -X GET "http://localhost:8080/user" -H "accept: application/json"
 ```

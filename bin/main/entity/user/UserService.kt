@@ -7,6 +7,9 @@ import org.jetbrains.squash.results.ResultRow
 import org.jetbrains.squash.schema.create
 import org.jetbrains.squash.statements.insertInto
 import org.jetbrains.squash.statements.values
+import java.util.UUID
+
+data class User(val id: String?, val email: String, val displayName: String, val password: String )
 
 class UserService(private val db: DatabaseConnection) {
     init {
@@ -15,13 +18,13 @@ class UserService(private val db: DatabaseConnection) {
         }
     }
 
-    fun insertUser() {
+    fun insertUser(user: User) {
         return db.transaction {
             insertInto(UserModel).values {
-                it[id] = "eugene"
-                it[email] = "Eugene"
-                it[displayName] = "displayName"
-                it[passwordHash] = "passwordHash"
+                it[id] = UUID.randomUUID()
+                it[email] = user.email
+                it[displayName] = user.displayName
+                it[passwordHash] = """Encrypted password ${user.password}"""
             }.execute()        }
     }
 

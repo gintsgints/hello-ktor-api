@@ -34,5 +34,5 @@ curl -X GET "http://localhost:8080/user" -H "accept: application/json"
 
 Autoreload is configured to work within two envents
 
-* watch for source changes and recompile - ```gradlew -t build -x test```
-* in ther console run server with hotreload updated classes ```gradlew run```
+- watch for source changes and recompile - `gradlew -t build`
+- in ther console run server with hotreload updated classes `gradlew run`

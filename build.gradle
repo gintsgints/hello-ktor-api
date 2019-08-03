@@ -37,7 +37,8 @@ dependencies {
     compile "io.ktor:ktor-server-host-common:$ktor_version"
     compile "io.ktor:ktor-jackson:$ktor_version"
 
-    compile "org.jetbrains.squash:squash-h2:$squash_version"
+    compile "org.jetbrains.squash:squash-postgres:$squash_version"
+    runtime "org.postgresql:postgresql:42.2.5"
     compile "org.kodein.di:kodein-di-generic-jvm:6.3.0"
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"

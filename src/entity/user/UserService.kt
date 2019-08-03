@@ -33,7 +33,7 @@ class UserService(private val db: DatabaseConnection) {
             from(UserModel)
                 .limit(100)
                 .execute()
-                .toM
+                .toList()
         }
     }
 }

@@ -10,7 +10,7 @@ fun Route.blogController(blogService: BlogService) {
     route("/blog") {
         post("/") {
             val blog = call.receive<Blog>()
-            call.respond(HttpStatusCode.OK, blogService.insertUser(blog))
+            call.respond(HttpStatusCode.Created, blogService.insertBlog(blog))
         }
 
         get("/") {

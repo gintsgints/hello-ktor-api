@@ -12,7 +12,7 @@ import org.jetbrains.squash.statements.insertInto
 import org.jetbrains.squash.statements.values
 import java.util.*
 
-data class Blog(val id: String?, val message: String, val user: User )
+data class Blog(val id: String?, val message: String, val user: User? )
 
 class BlogService(private val db: DatabaseConnection) {
     init {
@@ -21,12 +21,13 @@ class BlogService(private val db: DatabaseConnection) {
         }
     }
 
-    fun insertUser(blog: Blog) {
+    fun insertBlog(blog: Blog) {
         return db.transaction {
             insertInto(BlogModel).values {
                 it[id] = UUID.randomUUID()
                 it[message] = blog.message
-            }.execute()        }
+            }.execute()
+        }
     }
 
     fun findAll(): Set<ResultRow> {

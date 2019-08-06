@@ -1,33 +1,36 @@
 package eu.techwares.demo.entity.blog
 
+import org.jetbrains.exposed.dao.EntityID
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.*
 
-data class Blog(val id: String?, val message: String)
+data class Blog(val message: String)
 
 class BlogService() {
     init {
         transaction {
             addLogger(StdOutSqlLogger)
-            SchemaUtils.create(BlogModel)
+            SchemaUtils.create(Blogs)
         }
     }
 
-    fun insertBlog(blog: Blog) {
+    fun insertBlog(blog: Blog): Number {
         return transaction {
-            val newblog = BlogModel.insert {
+            Blogs.insert {
                 it[message] = blog.message
-            } get BlogModel.id
-            println(newblog)
+            }[Blogs.id]
         }
     }
 
-    fun findAll(): List<ResultRow> {
-        val blogList = transaction {
-            BlogModel.selectAll().toList()
+    fun findAll(): List<Blog> {
+        return transaction {
+            Blogs.selectAll().map {
+                Blog(it[Blogs.message])
+            }
         }
-        return blogList
     }
 
 }

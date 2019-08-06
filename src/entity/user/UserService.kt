@@ -1,6 +1,5 @@
 package eu.techwares.demo.entity.user
 
-import eu.techwares.demo.entity.blog.BlogModel
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 

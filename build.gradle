@@ -26,7 +26,6 @@ repositories {
     mavenLocal()
     jcenter()
     maven { url 'https://kotlin.bintray.com/ktor' }
-    maven { url "https://dl.bintray.com/kotlin/squash" }
 }
 
 dependencies {
@@ -37,7 +36,7 @@ dependencies {
     compile "io.ktor:ktor-server-host-common:$ktor_version"
     compile "io.ktor:ktor-jackson:$ktor_version"
 
-    compile "org.jetbrains.squash:squash-postgres:$squash_version"
+    compile "org.jetbrains.exposed:exposed:0.14.2"
     runtime "org.postgresql:postgresql:42.2.5"
     compile "org.kodein.di:kodein-di-generic-jvm:6.3.0"
 

@@ -10,7 +10,8 @@ fun Route.userController(userService: UserService) {
     route("/user") {
         post("/") {
             val user = call.receive<User>()
-            call.respond(HttpStatusCode.OK, userService.insertUser(user))
+            val retval = userService.insertUser(user)
+            call.respond(HttpStatusCode.OK, retval)
         }
 
         get("/") {

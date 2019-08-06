@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 
-data class Blog(val message: String)
+data class Blog(val id: Number?, val message: String)
 
 class BlogService() {
     init {
@@ -28,7 +28,7 @@ class BlogService() {
     fun findAll(): List<Blog> {
         return transaction {
             Blogs.selectAll().map {
-                Blog(it[Blogs.message])
+                Blog(it[Blogs.id], it[Blogs.message])
             }
         }
     }

@@ -1,6 +1,6 @@
 package eu.techwares.demo
 
-import eu.techwares.demo.entity.blog.BlogModel
+import eu.techwares.demo.entity.blog.Blogs
 import io.ktor.http.*
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
@@ -11,6 +11,9 @@ import kotlin.test.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import eu.techwares.demo.entity.blog.Blog
 
 class BlogTest {
     @BeforeTest
@@ -18,8 +21,8 @@ class BlogTest {
         Database.connect("jdbc:postgresql://localhost:5432/postgres", user="postgres", password = "postgres_234", driver = "org.postgresql.Driver")
         transaction {
             addLogger(StdOutSqlLogger)
-            SchemaUtils.create(BlogModel)
-            BlogModel.deleteAll()
+            SchemaUtils.create(Blogs)
+            Blogs.deleteAll()
         }
     }
 
@@ -43,9 +46,15 @@ class BlogTest {
             }.response.let { response ->
                 assertEquals(HttpStatusCode.Created, response.status())
                 assertNotNull(response.content)
-                assertEquals(listOf("""id=1, message=Hello, World!"""), response.content!!.lines())
-                val contentTypeText = assertNotNull(response.headers[HttpHeaders.ContentType])
-                assertEquals(ContentType.Text.Plain.withCharset(Charsets.UTF_8), ContentType.parse(contentTypeText))
+            }
+            handleRequest(HttpMethod.Get, "/blog").apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+                assertNotNull(response.content)
+                val mapper = jacksonObjectMapper()
+                val blog = mapper.readValue<Array<Blog>>(response.content.toString())
+                assertNotNull(blog)
+                assertNotNull(blog[0].message)
+                assertEquals("my first blog entry", blog[0].message)
             }
         }
     }

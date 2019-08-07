@@ -17,14 +17,21 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import io.ktor.response.respondText
 import io.ktor.routing.get
+import io.ktor.util.KtorExperimentalAPI
 import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
+@KtorExperimentalAPI
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    Database.connect("jdbc:postgresql://localhost:5432/postgres", user="postgres", password = "postgres_234", driver = "org.postgresql.Driver")
+    Database.connect(
+        environment.config.propertyOrNull("ktor.database.url")?.getString()?: "jdbc:postgresql://localhost:5432/postgres",
+        user=environment.config.propertyOrNull("ktor.database.user")?.getString()?: "postgres",
+        password = environment.config.propertyOrNull("ktor.database.password")?.getString()?: "postgres_234",
+        driver = environment.config.propertyOrNull("ktor.database.driver")?.getString()?: "org.postgresql.Driver"
+    )
 
     val kodein = Kodein {
         bind<UserService>() with singleton { UserService() }

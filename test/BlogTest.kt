@@ -1,6 +1,6 @@
 package eu.techwares.demo
 
-import eu.techwares.demo.entity.blog.BlogModel
+import eu.techwares.demo.entity.blog.Blogs
 import io.ktor.http.*
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
@@ -20,8 +20,8 @@ class BlogTest {
     fun clearDB() {
         val db : DatabaseConnection = PgConnection.create("localhost:5432/postgres", "postgres", "postgres_234")
         db.transaction {
-            databaseSchema().create(BlogModel)
-            deleteFrom(BlogModel)
+            databaseSchema().create(Blogs)
+            deleteFrom(Blogs)
                 .execute()
         }
     }

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.*
 import io.ktor.jackson.*
 import kotlin.test.*
 import io.ktor.server.testing.*
+import io.ktor.util.KtorExperimentalAPI
 
+@KtorExperimentalAPI
 class ApplicationTest {
     @Test
     fun testRoot() {

@@ -17,5 +17,11 @@ fun Route.blogController(blogService: BlogService) {
         get("/") {
             call.respond(HttpStatusCode.OK, blogService.findAll())
         }
+
+        get("/{id}") {
+            val blog = blogService.getBlog(call.parameters["id"]?.toInt()!!)
+            if (blog == null) call.respond(HttpStatusCode.NotFound)
+            else call.respond(blog)
+        }
     }
 }

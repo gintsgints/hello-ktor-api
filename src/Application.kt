@@ -26,7 +26,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     val kodein = Kodein {
-        bind <DatabaseConnection>() with singleton  { db() }
+        bind <DatabaseConnection>() with singleton  { db(environment) }
         bind<UserService>() with singleton { UserService(instance()) }
         bind<BlogService>() with singleton { BlogService(instance()) }
     }

@@ -6,7 +6,7 @@ Components used:
 
 - ktor & project is created in kotlin language
 - ktor - as basis
-- squash - for database connections
+- exposed - for database connections
 - kodein - dependency injection
 
 # Getting Started

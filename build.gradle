@@ -29,16 +29,16 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "ch.qos.logback:logback-classic:$logback_version"
-    compile "io.ktor:ktor-server-core:$ktor_version"
-    compile "io.ktor:ktor-server-host-common:$ktor_version"
-    compile "io.ktor:ktor-jackson:$ktor_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "io.ktor:ktor-server-core:$ktor_version"
+    implementation "io.ktor:ktor-server-host-common:$ktor_version"
+    implementation "io.ktor:ktor-jackson:$ktor_version"
 
-    compile "org.jetbrains.exposed:exposed:0.14.2"
+    implementation "org.jetbrains.exposed:exposed:0.14.2"
     runtime "org.postgresql:postgresql:42.2.5"
-    compile "org.kodein.di:kodein-di-generic-jvm:6.3.0"
+    implementation "org.kodein.di:kodein-di-generic-jvm:6.3.1"
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }

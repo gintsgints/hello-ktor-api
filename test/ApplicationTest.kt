@@ -1,26 +1,28 @@
 package eu.techwares.demo
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import com.fasterxml.jackson.databind.*
-import io.ktor.jackson.*
-import kotlin.test.*
-import io.ktor.server.testing.*
+import com.google.gson.Gson
+import eu.techwares.demo.entity.ApiResponse
+import io.ktor.server.testing.handleRequest
+import io.ktor.server.testing.withTestApplication
 import io.ktor.util.KtorExperimentalAPI
+import io.ktor.http.*
+import kotlin.test.*
 
 @KtorExperimentalAPI
 class ApplicationTest {
+    private val gson = Gson()
+
     @Test
-    fun testRoot() {
-        withTestApplication({ module(testing = true) }) {
-            handleRequest(HttpMethod.Get, "/").apply {
+    fun testFindOne() {
+        withTestApplication({ module() }) {
+            handleRequest(HttpMethod.Get, "/api/").apply {
+
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("Kotlin API example", response.content)
+                assertNotNull(response.content)
+                val responseObj = gson.fromJson(response.content, ApiResponse::class.java)
+                assertNotNull(responseObj)
+                assertNotNull(responseObj.message)
+                assertEquals("Ktor REST api", responseObj.message)
             }
         }
     }

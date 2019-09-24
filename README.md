@@ -26,8 +26,8 @@ gradlew run
 - check working api
 
 ```
-curl -X POST "http://localhost:8080/user" -H "accept: application/json" -H "Content-Type: application/json" -d '{"email": "test@test.com", "displayName": "test", "password": "test234"}'
-curl -X GET "http://localhost:8080/user" -H "accept: application/json"
+curl -X POST "http://localhost:8080/api/blog" -H "accept: application/json" -H "Content-Type: application/json" -d '{"message": "First blog message"}'
+curl -X GET "http://localhost:8080/api/blog/{id_you_got_form_previous}" -H "accept: application/json"
 ```
 
 # Auto reload.

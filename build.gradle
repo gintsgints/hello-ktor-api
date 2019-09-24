@@ -34,11 +34,17 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-host-common:$ktor_version"
-    implementation "io.ktor:ktor-jackson:$ktor_version"
-
-    implementation "org.jetbrains.exposed:exposed:0.14.2"
+    implementation "io.ktor:ktor-gson:$ktor_version"
+    implementation "org.jdbi:jdbi3-bom:$jdbi_version"
+    implementation "org.jdbi:jdbi3-sqlobject:$jdbi_version"
+    implementation "org.jdbi:jdbi3-kotlin:$jdbi_version"
+    implementation "org.jdbi:jdbi3-kotlin-sqlobject:$jdbi_version"
+    implementation "org.jdbi:jdbi3-postgres:$jdbi_version"
+    implementation "org.jdbi:jdbi3-gson2:$jdbi_version"
+    implementation "org.jdbi:jdbi3-json:$jdbi_version"
     runtime "org.postgresql:postgresql:42.2.5"
-    implementation "org.kodein.di:kodein-di-generic-jvm:6.3.1"
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
+    implementation "org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion"
 
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
